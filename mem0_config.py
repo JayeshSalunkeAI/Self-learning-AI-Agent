@@ -1,35 +1,40 @@
-import os
-from dotenv import load_dotenv
 from mem0 import Memory
 
-load_dotenv()
+from config import (
+    OLLAMA_BASE_URL,
+    LLM_MODEL,
+    EMBED_MODEL,
+    QDRANT_HOST,
+    QDRANT_PORT,
+    MEMORY_COLLECTION,
+)
 
-config = {
+mem0_config = {
     "vector_store": {
         "provider": "qdrant",
         "config": {
-            "collection_name": os.getenv("COLLECTION_NAME", "memories"),
-            "host": os.getenv("QDRANT_HOST", "localhost"),
-            "port": int(os.getenv("QDRANT_PORT", "6333")),
-            "embedding_model_dims": 768,  # nomic-embed-text output size
+            "collection_name": MEMORY_COLLECTION,
+            "host": QDRANT_HOST,
+            "port": QDRANT_PORT,
+            "embedding_model_dims": 768,
         },
     },
     "llm": {
         "provider": "ollama",
         "config": {
-            "model": os.getenv("LLM_MODEL", "llama3.1:8b"),
+            "model": LLM_MODEL,
             "temperature": 0,
-            "max_tokens": 2000,
-            "ollama_base_url": os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
+            "max_tokens": 1500,
+            "ollama_base_url": OLLAMA_BASE_URL,
         },
     },
     "embedder": {
         "provider": "ollama",
         "config": {
-            "model": os.getenv("EMBED_MODEL", "nomic-embed-text:latest"),
-            "ollama_base_url": os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
+            "model": EMBED_MODEL,
+            "ollama_base_url": OLLAMA_BASE_URL,
         },
     },
 }
 
-memory = Memory.from_config(config)
+memory = Memory.from_config(mem0_config)

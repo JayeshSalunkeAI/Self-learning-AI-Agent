@@ -1,7 +1,9 @@
-mem0ai
-langgraph
-langchain-core
-langchain-ollama
-qdrant-client
 streamlit
 python-dotenv
+mem0ai
+qdrant-client
+langchain-core
+langchain-ollama
+langchain-text-splitters
+langgraph
+PyPDF2
